@@ -82,6 +82,15 @@ void Game::Render() const
 		bricks[i].Draw();
 	}
 
+	if (bricks.empty())
+	{
+		printf("Victory! Press R to reset");
+	}
+	else if (ball.y_position >= WINDOW_HEIGHT - 1)
+	{
+		printf("You Lose! Press R to reset");
+	}
+
 	Console::Lock(false);
 }
 
@@ -112,8 +121,6 @@ void Game::CheckCollision()
 	{
 		ball.y_velocity = 0;
 		ball.x_velocity = 0;
-
-		printf("You Win! Press R to reset");
 	}
 
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
@@ -122,5 +129,9 @@ void Game::CheckCollision()
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
-
+	if (ball.y_position >= WINDOW_HEIGHT - 1)
+	{
+		ball.y_velocity = 0;
+		ball.x_velocity = 0;
+	}
 }
